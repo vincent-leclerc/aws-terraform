@@ -51,7 +51,7 @@ resource "aws_security_group" "sg_wp_bdd" {
     from_port   = "3306"
     to_port     = "3306"
     protocol    = "tcp"
-    cidr_blocks = ["192.168.20.0/24"]
+    cidr_blocks = ["192.168.10.20/24"]
   }
 
   # autorise icmp (ping)
