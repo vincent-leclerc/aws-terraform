@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+function generate_keypair() {
+    keyfile=$1
+    if [ "${keyfile}" == "id_rsa_aws" ]
+    then 
+	comment="bastion"
+    else
+	comment="host"
+    fi
+    if [ -r ${keyfile} ]
+    then
+	echo "${keyfile} found! Not generating it."
+    else
+	echo "Generating keypair for ${comment}: ${keyfile}"
+	ssh-keygen -q -t rsa -b 2028 -N '' -C ${comment} -f ${keyfile}
+    fi
+}
+
+generate_keypair id_rsa_wp1

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+usage="$0 [app|bdd]"
+
+if (( $# != 1 ))
+then
+  echo $usage
+  exit 2
+fi
+
+if ! type jq
+then
+  echo "jq tool not installed, use apt, dnf or brew to install it"
+  exit 1
+fi
+
+public_ip=$( terraform output -json wp_${1}_ip | jq -r '.[0]' )
+
+echo "Instance public ip:" ${public_ip}
+
+ssh -i ../ssh-keys/id_rsa_wp1 \
+    -o StrictHostKeyChecking=no \
+    -o UserKnownHostsFile=/dev/null \
+    ubuntu@${public_ip}
